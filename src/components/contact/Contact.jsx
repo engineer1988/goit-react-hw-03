@@ -1,27 +1,31 @@
 import PropTypes from "prop-types";
 import { FaUser } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
+import css from "./Contact.module.css";
+
 const Contact = ({ name, number }) => {
   return (
-    <div>
-      <div>
-        <div>
-          <p>
+    <>
+      <div className={css.contact_card}>
+        <div className={css.contact_name_number}>
+          <span className={css.contact_svg}>
             <FaUser />
-            {name}
-          </p>
+          </span>
+          <p>{name}</p>
         </div>
-        <div>
-          <p>
+        <div className={css.contact_name_number}>
+          <span className={css.contact_svg}>
             <FaPhoneAlt />
-            {number}
-          </p>
+          </span>{" "}
+          <p>{number}</p>
         </div>
       </div>
-      <div>
-        <button type="button">Delete</button>
+      <div className={css.contact_delete}>
+        <button type="button" className={css.contact_delete_button}>
+          Delete
+        </button>
       </div>
-    </div>
+    </>
   );
 };
 

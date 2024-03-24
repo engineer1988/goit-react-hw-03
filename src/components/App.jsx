@@ -1,9 +1,7 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+import { useState } from "react";
 import "./App.css";
-// import ContactForm from "./contact-form/Contact Form";
-// import SearchBox from "./search-box/SearchBox";
+import ContactForm from "./contact-form/ContactForm";
+import SearchBox from "./search-box/SearchBox";
 import ContactList from "./contact-list/ContactList";
 
 function App() {
@@ -14,12 +12,17 @@ function App() {
     { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
   ];
 
+  const [dataSearh, setDataSearch] = useState("");
+
+  const searchBar = dataContacts.filter((contact) =>
+    contact.name.toLowerCase().includes(dataSearh.toLowerCase())
+  );
   return (
     <div>
       <h1>Phonebook</h1>
-      {/* <ContactForm /> */}
-      {/* <SearchBox /> */}
-      <ContactList dataContacts={dataContacts} />
+      <ContactForm />
+      <SearchBox dataSearh={dataSearh} setDataSearch={setDataSearch} />
+      <ContactList dataContacts={searchBar} />
     </div>
   );
 }
