@@ -25,3 +25,7 @@
   display: flex;
   justify-content: center;
 }
+
+.contact_form_field {
+  padding: 5px;
+}

@@ -13,16 +13,31 @@ function App() {
   ];
 
   const [dataSearh, setDataSearch] = useState("");
+  const [newDataContacts, setAddContact] = useState(dataContacts);
 
-  const searchBar = dataContacts.filter((contact) =>
+  const addContact = (newContacts) => {
+    setAddContact((prevDataContacts) => {
+      return [...prevDataContacts, newContacts];
+    });
+  };
+
+  const searchBar = newDataContacts.filter((contact) =>
     contact.name.toLowerCase().includes(dataSearh.toLowerCase())
   );
+
+  const deleteContact = (contactId) => {
+    console.log(contactId);
+    // setAddContact((prevDataContacts) => {
+    //   return prevDataContacts.filter((contact) => contact.id !== contactId);
+    // });
+  };
+
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm />
+      <ContactForm onAdd={addContact} />
       <SearchBox dataSearh={dataSearh} setDataSearch={setDataSearch} />
-      <ContactList dataContacts={searchBar} />
+      <ContactList dataContacts={searchBar} onDeleteContact={deleteContact} />
     </div>
   );
 }
