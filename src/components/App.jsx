@@ -26,10 +26,9 @@ function App() {
   );
 
   const deleteContact = (contactId) => {
-    console.log(contactId);
-    // setAddContact((prevDataContacts) => {
-    //   return prevDataContacts.filter((contact) => contact.id !== contactId);
-    // });
+    setAddContact((prevDataContacts) => {
+      return prevDataContacts.filter((contact) => contact.id !== contactId);
+    });
   };
 
   return (
