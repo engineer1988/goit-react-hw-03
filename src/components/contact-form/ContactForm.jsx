@@ -3,6 +3,19 @@ import css from "./ContactForm.module.css";
 import { Formik, Form, Field } from "formik";
 import { useId } from "react";
 import { nanoid } from "nanoid";
+import * as Yup from "yup";
+import { ErrorMessage } from "formik";
+
+const ContactFormSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  number: Yup.string()
+    .min(3, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+});
 
 const ContactForm = ({ onAdd }) => {
   const nameFieldId = useId();
@@ -10,9 +23,9 @@ const ContactForm = ({ onAdd }) => {
 
   const handleSubmit = (values, actions) => {
     onAdd({
+      id: nanoid(10),
       name: values.name,
       number: values.number,
-      id: nanoid(10),
     });
     actions.resetForm();
   };
@@ -23,6 +36,7 @@ const ContactForm = ({ onAdd }) => {
         number: "",
       }}
       onSubmit={handleSubmit}
+      validationSchema={ContactFormSchema}
     >
       <Form className={css.contact_form}>
         <div className={css.contact_form_name_number}>
@@ -33,6 +47,11 @@ const ContactForm = ({ onAdd }) => {
             id={nameFieldId}
             className={css.contact_form_field}
           />
+          <ErrorMessage
+            name="name"
+            component="div"
+            className={css.contact_form_error_message}
+          />
         </div>
         <div className={css.contact_form_name_number}>
           <label htmlFor={numberFieldId}>Number</label>
@@ -41,6 +60,11 @@ const ContactForm = ({ onAdd }) => {
             name="number"
             id={numberFieldId}
             className={css.contact_form_field}
+          />
+          <ErrorMessage
+            name="number"
+            component="div"
+            className={css.contact_form_error_message}
           />
         </div>
         <div className={css.contact_form_div_button}>

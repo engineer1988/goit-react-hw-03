@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import ContactForm from "./contact-form/ContactForm";
 import SearchBox from "./search-box/SearchBox";
@@ -13,7 +13,13 @@ function App() {
   ];
 
   const [dataSearh, setDataSearch] = useState("");
-  const [newDataContacts, setAddContact] = useState(dataContacts);
+  const [newDataContacts, setAddContact] = useState(() => {
+    const savedValues = window.localStorage.getItem("saved-values");
+    if (savedValues !== null) {
+      return JSON.parse(savedValues);
+    }
+    return dataContacts;
+  });
 
   const addContact = (newContacts) => {
     setAddContact((prevDataContacts) => {
@@ -30,6 +36,12 @@ function App() {
       return prevDataContacts.filter((contact) => contact.id !== contactId);
     });
   };
+  useEffect(() => {
+    window.localStorage.setItem(
+      "saved-values",
+      JSON.stringify(newDataContacts)
+    );
+  }, [newDataContacts]);
 
   return (
     <div>
